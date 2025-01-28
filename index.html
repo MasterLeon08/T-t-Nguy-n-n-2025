@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc mừng Tết Nguyên Đán</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #ff0000;
+            background-image: url('https://example.com/tet_background.jpg'); /* Thay URL bằng ảnh trang trí Tết */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px #000;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px #000;
+        }
+
+        button {
+            background-color: #ffd700;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            border-radius: 50%;
+            animation: flyUp 1.5s linear forwards;
+        }
+
+        @keyframes flyUp {
+            0% {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Chúc Mừng Năm Mới!</h1>
+    <p>Click vào nút dưới đây để nhận lời chúc:</p>
+    <button onclick="showWish()">Nhận Lời Chúc</button>
+
+    <script>
+        const wishes = [
+            "Chúc bạn một năm mới an khang thịnh vượng!",
+            "Chúc sức khỏe dồi dào, vạn sự như ý!",
+            "Chúc mọi điều tốt lành đến với bạn và gia đình!",
+            "Chúc bạn thành công rực rỡ trong năm mới!",
+            "Chúc một năm tràn đầy hạnh phúc và niềm vui!"
+        ];
+
+        function showWish() {
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            alert(randomWish);
+            createFirework();
+        }
+
+        function createFirework() {
+            for (let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = Math.random() * window.innerWidth + 'px';
+                firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                document.body.appendChild(firework);
+
+                firework.addEventListener('animationend', () => {
+                    firework.remove();
+                });
+            }
+        }
+    </script>
+</body>
+</html>
