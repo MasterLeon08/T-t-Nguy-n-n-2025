@@ -55,14 +55,23 @@
 
         .firework {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 5px;
+            height: 5px;
             background-color: white;
             border-radius: 50%;
-            animation: flyUp 2s ease-out forwards, explode 1s ease-out forwards;
+            animation: explode 1.5s ease-out forwards;
         }
 
-        @keyframes flyUp {
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+            animation: particleMove 1.5s ease-out forwards;
+        }
+
+        @keyframes explode {
             0% {
                 transform: translateY(100vh);
                 opacity: 1;
@@ -76,13 +85,13 @@
             }
         }
 
-        @keyframes explode {
+        @keyframes particleMove {
             0% {
-                transform: scale(1);
+                transform: translate(0, 0) scale(1);
                 opacity: 1;
             }
             100% {
-                transform: scale(3);
+                transform: translate(var(--x), var(--y)) scale(0.5);
                 opacity: 0;
             }
         }
@@ -138,16 +147,36 @@
         }
 
         function createFirework() {
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 10; i++) {
                 const firework = document.createElement('div');
                 firework.className = 'firework';
                 firework.style.left = Math.random() * window.innerWidth + 'px';
-                firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                firework.style.top = Math.random() * window.innerHeight * 0.7 + 'px';
                 document.body.appendChild(firework);
 
-                firework.addEventListener('animationend', () => {
+                setTimeout(() => {
+                    for (let j = 0; j < 30; j++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = firework.style.left;
+                        particle.style.top = firework.style.top;
+
+                        const angle = Math.random() * 2 * Math.PI;
+                        const distance = Math.random() * 100 + 50;
+
+                        particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+                        particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+                        particle.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+
+                        document.body.appendChild(particle);
+
+                        particle.addEventListener('animationend', () => {
+                            particle.remove();
+                        });
+                    }
+
                     firework.remove();
-                });
+                }, 1500);
             }
         }
     </script>
